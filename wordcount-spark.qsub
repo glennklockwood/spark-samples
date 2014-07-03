@@ -1,0 +1,42 @@
+#!/bin/bash
+#PBS -N spark-demo
+#PBS -l nodes=4:ppn=16:native:flash
+#PBS -l walltime=0:30:00
+#PBS -v Catalina_maxhops=None
+#PBS -q normal
+
+### Environment setup for Hadoop
+export MODULEPATH=/home/glock/apps/modulefiles:$MODULEPATH
+module load hadoop/2.2.0
+export HADOOP_CONF_DIR=$HOME/mycluster.conf
+
+myhadoop-configure.sh
+
+### Start HDFS.  Starting YARN isn't necessary since Spark will be running in
+### standalone mode on our cluster.
+start-dfs.sh
+
+### Load in the necessary Spark environment variables
+source $HADOOP_CONF_DIR/spark/spark-env.sh
+
+### Start the Spark masters and workers.  Do NOT use the start-all.sh provided 
+### by Spark, as they do not correctly honor $SPARK_CONF_DIR
+myspark start
+
+### Run our example problem.
+### Step 1. Load data into HDFS (Hadoop 2.x does not make the user's HDFS home 
+###         dir by default which is different from Hadoop 1.x!)
+hdfs dfs -mkdir -p /user/$USER
+hdfs dfs -put /home/glock/hadoop/run/gutenberg.txt /user/$USER/gutenberg.txt
+
+### Step 2. Run our Python Spark job.  Note that Spark implicitly requires 
+### Python 2.6 (some features, like MLLib, require 2.7)
+module load python scipy
+/home/glock/hadoop/run/wordcount-spark.py
+
+### Shut down Spark and HDFS
+myspark stop
+stop-dfs.sh
+
+### Clean up
+myhadoop-cleanup.sh
