@@ -33,12 +33,15 @@ myspark start
 ### Step 1. Load data into HDFS (Hadoop 2.x does not make the user's HDFS home 
 ###         dir by default which is different from Hadoop 1.x!)
 hdfs dfs -mkdir -p /user/$USER
-hdfs dfs -put /home/glock/hadoop/run/gutenberg.txt /user/$USER/gutenberg.txt
+hdfs dfs -put /home/glock/hadoop/sparktutorial/gutenberg.txt /user/$USER/gutenberg.txt
 
 ### Step 2. Run our Python Spark job.  Note that Spark implicitly requires 
-### Python 2.6 (some features, like MLLib, require 2.7)
+###         Python 2.6 (some features, like MLLib, require 2.7)
 module load python scipy
-/home/glock/hadoop/run/wordcount-spark.py
+/home/glock/hadoop/sparktutorial/wordcount-spark.py
+
+### Step 3. Copy output data back out
+hdfs dfs -get /user/$USER/output.dir $PBS_O_WORKDIR/
 
 ### Shut down Spark and HDFS
 myspark stop
