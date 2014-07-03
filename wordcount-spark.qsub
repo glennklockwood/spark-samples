@@ -1,4 +1,10 @@
 #!/bin/bash
+################################################################################
+#  A simple wordcount example for Spark, designed to run on SDSC's Gordon
+#  resource.
+#
+#  Glenn K. Lockwood, San Diego Supercomputer Center                 July 2014
+################################################################################
 #PBS -N spark-demo
 #PBS -l nodes=4:ppn=16:native:flash
 #PBS -l walltime=0:30:00

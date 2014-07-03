@@ -1,4 +1,10 @@
 #!/usr/bin/env pyspark
+################################################################################
+#  A simple wordcount example for Spark, designed to run on SDSC's Gordon
+#  resource.
+#
+#  Glenn K. Lockwood, San Diego Supercomputer Center                 July 2014
+################################################################################
 
 from pyspark import SparkContext
 
