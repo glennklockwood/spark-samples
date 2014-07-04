@@ -11,8 +11,9 @@
 #PBS -v Catalina_maxhops=None
 #PBS -q normal
 
-### Environment setup for Hadoop
+### Environment setup for Hadoop and Spark
 export MODULEPATH=/home/glock/apps/modulefiles:$MODULEPATH
+module load python scipy
 module load hadoop/2.2.0
 export HADOOP_CONF_DIR=$HOME/mycluster.conf
 
@@ -37,7 +38,6 @@ hdfs dfs -put /home/glock/hadoop/sparktutorial/gutenberg.txt /user/$USER/gutenbe
 
 ### Step 2. Run our Python Spark job.  Note that Spark implicitly requires 
 ###         Python 2.6 (some features, like MLLib, require 2.7)
-module load python scipy
 /home/glock/hadoop/sparktutorial/wordcount-spark.py
 
 ### Step 3. Copy output data back out
