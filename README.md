@@ -1,10 +1,18 @@
-Spark Tutorial
+Spark Samples
 =============
 
 This represents the beginning of a tutorial I was creating for Spark users on 
 the Gordon supercomputer at the San Diego Supercomputer Center.  I ran out of 
-time when building out the full set of training material, but this is what I 
-thought might be useful and worth keeping for posterity.
+time when building out the full set of training material, so now I just keep
+some Spark scripts I've written and used.
 
-The wordcount-spark example looks for an input file called "gutenberg.txt"
-which can be found on Gordon in /oasis/scratch/glock/temp_project/ucsdext2014.
+wordcount-spark.py
+------------------
+This is the canonical word count example implemented in pyspark.
+
+analyze-mmapplypolicy.py
+------------------------
+This is a script to perform some analysis of the output of the `mmapplypolicy`
+command that dumps every file and most of its metadata on a GPFS cluster.  As
+of July 5, 2016, this only works on a pre-filtered format and not the full
+`mmapplypolicy` output.
